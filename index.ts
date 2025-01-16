@@ -2,25 +2,18 @@ import type { Application, Request, Response } from 'express';
 import express from 'express';
 import dotenv from 'dotenv';
 import { AppDataSource } from './AppDataSource';
-import { request } from 'http';
 import userRouter from 'routes/userRoutes';
+import authRouter from 'routes/authRoutes';
 
 dotenv.config();
 
 const app: Application = express();
 const PORT = 8080;
 
-interface Params {
-	id: string;
-}
-
 app.use(express.json());
 
 app.use('/api', userRouter);
-
-app.get('/api/events', (req: Request, res: Response) => {
-	res.send('Welcome to the server');
-});
+app.use('/api', authRouter);
 
 (async () => {
 	try {
