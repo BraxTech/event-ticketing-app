@@ -17,5 +17,7 @@ export class User {
 	@Column()
 	password!: string;
 
+	@Column()
+	role!: string;
 	// @OneToMany(()=>Ticket,(ticket)=> ticket.user)
 }

@@ -2,11 +2,10 @@ import { AppDataSource } from 'AppDataSource';
 import type { RequestHandler } from 'express';
 import { User } from 'entities/user';
 import { generateJWT, hashPassword, verifyPassword } from 'utils/authUtils';
-import { strict } from 'assert';
 
 export const createUser: RequestHandler = async (req, res) => {
 	try {
-		const { name, email, password } = req.body;
+		const { name, email, password, role } = req.body;
 		if (!name || !email || !password) {
 			res.status(400).json({ message: 'All fields are required' });
 			return;
@@ -16,6 +15,7 @@ export const createUser: RequestHandler = async (req, res) => {
 		user.name = name;
 		user.email = email;
 		user.password = hashedPassword;
+		user.role = role || 'user';
 
 		const savedUser = await AppDataSource.manager.save(user);
 		res
@@ -68,3 +68,5 @@ export const logoutUser: RequestHandler = async (req, res) => {
 		res.status(500).json({ mesage: 'Internal server error' });
 	}
 };
+
+export const updateUser: RequestHandler = async (req, es) => {};
